@@ -1,41 +1,88 @@
 .card {
-  border: 1px solid #ddd;
+  background-color: #004346;
+  color: #75DDDD;
   border-radius: 8px;
-  width: 200px;
-  padding: 10px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  width: 250px;
+  margin: 10px;
+  flex-shrink: 0;
+}
+
+.card:hover {
+  cursor: pointer;
+  .card-title {
+    text-decoration: underline;
+  }
+  transform: scale(1.05);
 }
 
 .card-image {
   width: 100%;
-  height: auto;
-  border-radius: 4px;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 2px solid #09BC8A;
 }
 
 .card-info {
-  margin-top: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
-.card-info h3 {
-  font-size: 1.2rem;
-  margin: 10px 0;
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.card-info p {
+.card-price {
+  font-size: 1.25rem;
+  color: #09BC8A;
+  margin-bottom: 8px;
+}
+
+.card-description {
   font-size: 1rem;
-  color: #333;
+  color: #508991;
+  margin-bottom: 12px;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-ratings,
+.card-category {
+  font-size: 0.875rem;
+  color: #75DDDD;
 }
 
 .btn {
-  padding: 8px 12px;
-  border: none;
-  background-color: #007bff;
+  background-color: #09BC8A;
   color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  border-radius: 4px;
+  transition: background-color 0.3s;
+  margin-top: auto;
 }
 
 .btn:hover {
-  background-color: #0056b3;
+  background-color: #508991;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }

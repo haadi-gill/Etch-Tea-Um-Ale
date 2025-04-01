@@ -1,0 +1,86 @@
+.sell-page {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 40px;
+  background-color: #172A3A;
+  color: #75DDDD;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.sell-page h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #09BC8A;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 1.2rem;
+  color: #75DDDD;
+  width: 150px;
+  text-align: right;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 2px solid #508991;
+  border-radius: 6px;
+  background-color: #004346;
+  color: #75DDDD;
+  transition: all 0.3s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #75DDDD;
+  opacity: 0.7;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #09BC8A;
+  box-shadow: 0 0 8px rgba(9, 188, 138, 0.5);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-group button {
+  background-color: #09BC8A;
+  color: #172A3A;
+  padding: 14px 24px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-group button:hover {
+  background-color: #508991;
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
