@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './ProductDetails.css';
-import fetchAllListings from '../../bridge.js';
+import { fetchAllListings } from '../../bridge';
 
 const ProductDetails = () => {
   const { id } = useParams();

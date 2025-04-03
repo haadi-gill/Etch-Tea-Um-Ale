@@ -49,3 +49,5 @@ function uploadListing(listing){
 function newUser(email, password){
     //TODO: Replace with email validation and uploading new profile
 }
+
+export { fetchAllListings, fetchListing, fetchUserListings, login, uploadListing, newUser };
