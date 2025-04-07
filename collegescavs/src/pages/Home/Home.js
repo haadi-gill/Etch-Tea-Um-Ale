@@ -93,7 +93,6 @@ const Home = () => {
         </div>
       </div>
 
-      <Button text="View Cart" onClick={() => alert('Viewing Cart')} />
     </div>
   );
 };
