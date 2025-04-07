@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Card.css';
-import { useWishlist } from '../../context/WishlistContext'; // path may vary
+import { useWishlist } from '../../context/WishlistContext'; 
 
 const Card = ({ id, image, title, price }) => {
   const { addToWishlist } = useWishlist();
@@ -9,8 +9,7 @@ const Card = ({ id, image, title, price }) => {
   const handleWishlist = (e) => {
     e.preventDefault();
     addToWishlist({ id, image, title, price });
-    // Optional: alert or toast
-    // alert(`${title} added to wishlist!`);
+   
   };
 
   return (
