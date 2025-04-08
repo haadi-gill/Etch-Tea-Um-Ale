@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import './ProductDetails.css';
 import { fetchAllListings } from '../../bridge';
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleBack = (e) => {
+    e.preventDefault();
+    if (location.state?.from === 'profile') {
+      
+      navigate('/profile');
+    } else {
+      console.log(location.state?.from);
+      navigate('/');
+    }
+  };
 
   useEffect(() => {
     const products = fetchAllListings();
@@ -21,7 +34,7 @@ const ProductDetails = () => {
 
   return (
     <div className="product-details">
-      <Link to="/" className="back-link">
+      <Link to="/" onClick={handleBack} className="back-link">
         &larr; Back
       </Link>
       <div className="product-container">

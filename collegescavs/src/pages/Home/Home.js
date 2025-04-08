@@ -87,6 +87,7 @@ const Home = () => {
               description={product.description}
               ratings={product.ratings}
               category={product.category}
+              from='home'
               onClick={() => handleAddToCart(product)}
             />
           ))}

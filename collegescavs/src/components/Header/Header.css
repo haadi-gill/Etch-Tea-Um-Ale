@@ -34,3 +34,13 @@
 .nav-link:hover {
   color: #acb6b7;
 }
+
+.nav-button {
+  all: unset;
+  cursor: pointer;
+  color: #75DDDD;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}

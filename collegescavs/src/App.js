@@ -6,24 +6,28 @@ import Header from './components/Header/Header';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
 import Wishlist from './pages/WishList/Wishlist';
 import Sell from './pages/Sell/Sell';
+import Profile from './pages/Profile/Profile';
 import { WishlistProvider } from './context/WishlistContext';
+import { AuthProvider } from './context/AuthContext';
 
 const App = () => {
   return (
-    <WishlistProvider>
-      <Router>
-        <div className="App">
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<div>Profile Page</div>} />
-            <Route path="/sell" element={<Sell />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-          </Routes>
-        </div>
-      </Router>
-    </WishlistProvider>
+    <AuthProvider>
+      <WishlistProvider>
+        <Router>
+          <div className="App">
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/sell" element={<Sell />} />
+              <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/wishlist" element={<Wishlist />} />
+            </Routes>
+          </div>
+        </Router>
+      </WishlistProvider>
+    </AuthProvider>
   );
 };
 

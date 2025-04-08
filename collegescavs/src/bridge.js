@@ -23,6 +23,25 @@ const products = [
     { id: 15, title: 'Projector', price: 350, description: 'Project your media onto any surface for a cinematic experience', image: '../assets/phone.png', ratings: 4.6, category: 'Electronics' }
   ];
 
+  //test user data until database connected
+const users = [
+    //sample list of users for loggin in and displaying profiles
+    {
+      email: 'john@example.com',
+      rating: 4.5,
+      profilePic: 'https://upload.wikimedia.org/wikipedia/commons/8/85/Smiley.svg',
+      listings: [
+        { id: 1, title: 'Laptop', price: 999, description: 'A powerful laptop for gaming and work', image: '../assets/laptop.jpg', ratings: 4.5, category: 'Electronics' },
+        { id: 2, title: 'Smartphone', price: 499, description: 'A sleek and modern smartphone', image: '../assets/phone.png', ratings: 4.5, category: 'Electronics' },
+        { id: 3, title: 'Headphones', price: 199, description: 'Noise-cancelling over-ear headphones', image: '../assets/headphones.jpg', ratings: 4.5, category: 'Accessories' },
+    ],
+      password: 'password123',
+      purchases: [
+
+      ]
+    },
+];
+
 function fetchAllListings() {
     //TODO: Replace with database connection
     return products;
@@ -36,10 +55,21 @@ function fetchListing(listingID) {
 
 function fetchUserListings(email){
     //TODO: Replace with all user listings from database
+    const user = users.find(u => u.email === email);
+    return user ? user.listings : [];
 }
 
 function login(email, password){
     //TODO: Replace with login functionality
+    const user = users.find(u => u.email === email && u.password === password);
+    return user ? { ...user, password: undefined } : null;
+}
+
+function fetchUserInfo(email) {
+    const user = users.find(u => u.email === email);
+    if (!user) return null;
+    const { rating, profilePic } = user;
+    return { rating, profilePic };
 }
 
 function uploadListing(listing){
@@ -50,4 +80,4 @@ function newUser(email, password){
     //TODO: Replace with email validation and uploading new profile
 }
 
-export { fetchAllListings, fetchListing, fetchUserListings, login, uploadListing, newUser };
+export { fetchAllListings, fetchListing, fetchUserListings, login, fetchUserInfo, uploadListing, newUser };
