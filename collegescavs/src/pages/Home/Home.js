@@ -3,7 +3,7 @@ import Card from '../../components/Card/Card';
 import Button from '../../components/Button/Button';
 import FilterBar from '../../components/FilterBar/FilterBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { fetchAllListings } from '../../bridge';
+import { FetchAllListings } from '../../bridge';
 import './Home.css';
 
 const Home = () => {
@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const listings = await fetchAllListings();
+        const listings = await FetchAllListings();
         setAllProducts(listings);
         setDisplayedProducts(listings);
       } catch (error) {

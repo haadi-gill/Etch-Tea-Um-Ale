@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './ProductDetails.css';
-import { fetchAllListings } from '../../bridge';
+import { FetchAllListings } from '../../bridge';
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const products = fetchAllListings();
+    const products = FetchAllListings();
     const selectedProduct = products.find(
       (product) => product.id === parseInt(id)
     );

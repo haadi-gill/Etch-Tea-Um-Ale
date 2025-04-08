@@ -3,6 +3,7 @@ This file exists to connect the backend to the frontend,
 acting as a helper file. Primarily it will turn database items
 to usable objects for the front end.
 */
+import { useEffect, useState } from 'react';
 
 //This is just test data until database is connected
 const products = [
@@ -23,31 +24,39 @@ const products = [
     { id: 15, title: 'Projector', price: 350, description: 'Project your media onto any surface for a cinematic experience', image: '../assets/phone.png', ratings: 4.6, category: 'Electronics' }
   ];
 
-function fetchAllListings() {
-    //TODO: Replace with database connection
-    return products;
+function FetchAllListings() {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:3000/posts')
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch (err => console.log(err));
+    }, [])
+    return (
+        data
+    );
 
 }
 
-function fetchListing(listingID) {
+function FetchListing(listingID) {
     //TODO: Replace with database search
     return products.find(obj => obj.id === listingID);
 }
 
-function fetchUserListings(email){
+function FetchUserListings(email){
     //TODO: Replace with all user listings from database
 }
 
-function login(email, password){
+function Login(email, password){
     //TODO: Replace with login functionality
 }
 
-function uploadListing(listing){
+function UploadListing(listing){
     //TODO: Replace with backend functionality for uploading
 }
 
-function newUser(email, password){
+function NewUser(email, password){
     //TODO: Replace with email validation and uploading new profile
 }
 
-export { fetchAllListings, fetchListing, fetchUserListings, login, uploadListing, newUser };
+export { FetchAllListings, FetchListing, FetchUserListings, Login, UploadListing, NewUser };
