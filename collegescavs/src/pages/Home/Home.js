@@ -56,10 +56,6 @@ const Home = () => {
     setDisplayedProducts(filtered);
   }, [filters, searchQuery, allProducts]);
 
-  const handleAddToCart = (product) => {
-    alert(`Added ${product.title} to cart`);
-  };
-
   const handleRemoveFromWishlist = (id) => {
     removeFromWishlist(id);
   };
@@ -102,7 +98,6 @@ const Home = () => {
                 description={product.description}
                 ratings={product.ratings}
                 category={product.category}
-                onClick={() => handleAddToCart(product)}
                 onWishlist={wishlist.some(item => item.id === product.id)}
                 onRemove={handleRemoveFromWishlist}
               />

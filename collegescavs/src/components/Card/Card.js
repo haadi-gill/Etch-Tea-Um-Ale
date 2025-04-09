@@ -18,9 +18,10 @@ const Card = ({ id, image, title, price, ratings, onWishlist = false, onRemove }
     if (onWishlist && onRemove) {
       onRemove(id);
     } else {
-      addToWishlist({ id, image, title, price });
+      addToWishlist({ id, image, title, price, ratings });
     }
   };
+  
 
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);

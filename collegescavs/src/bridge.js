@@ -4,6 +4,41 @@ acting as a helper file. Primarily it will turn database items
 to usable objects for the front end.
 */
 
+// list of categories
+const categories = [
+    "Textbooks",
+    "Furniture",
+    "Kitchenware",
+    "Electronics",
+    "Clothing",
+    "Bedding & Linens",
+    "School Supplies",
+    "Office Supplies",
+    "Sports Equipment",
+    "Technology Accessories",
+    "Appliances",
+    "Art Supplies",
+    "Party Supplies",
+    "Cleaning Supplies",
+    "Toys & Games",
+    "Health & Fitness",
+    "Decor",
+    "Laptops & Computers",
+    "Cell Phones & Accessories",
+    "Gaming",
+    "Transportation (Bikes, Scooters)",
+    "Room Essentials",
+    "Stationery",
+    "Food & Snacks",
+    "Tickets & Events",
+    "Musical Instruments",
+    "Jewelry & Watches",
+    "Outdoor Gear",
+    "Storage Solutions",
+    "Other"
+  ];
+  
+
 //This is just test data until database is connected
 const products = [
     { id: 1, title: 'Laptop', price: 999, description: 'A powerful laptop for gaming and work', image: '../assets/laptop.jpg', ratings: 2.5, category: 'Electronics' },
@@ -52,4 +87,4 @@ function newUser(email, password){
     //TODO: Replace with email validation and uploading new profile
 }
 
-export { fetchAllListings, fetchListing, fetchUserListings, login, uploadListing, newUser };
+export { fetchAllListings, fetchListing, fetchUserListings, login, uploadListing, newUser, categories };
