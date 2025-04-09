@@ -1,23 +1,36 @@
 import React from 'react';
 import './Wishlist.css';
 import { useWishlist } from '../../context/WishlistContext';
+import { Link } from 'react-router-dom';
+import Card from '../../components/Card/Card';
 
 const Wishlist = () => {
-  const { wishlist } = useWishlist();
+  const { wishlist, removeFromWishlist } = useWishlist();
 
   return (
     <div className="wishlist">
-      <h2>Your Wishlist</h2>
       {wishlist.length === 0 ? (
         <p>No items in wishlist.</p>
       ) : (
         <div className="wishlist-grid">
-          {wishlist.map(({ id, image, title, price }) => (
-            <div key={id} className="wishlist-card">
-              <img src={image} alt={title} className="wishlist-image" />
-              <h3>{title}</h3>
-              <p>${price}</p>
-            </div>
+          {wishlist.map((product) => (
+            <Link 
+              to={`/product/${product.id}`} 
+              key={product.id}
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <Card
+                id={product.id}
+                image={product.image}
+                title={product.title}
+                price={product.price}
+                description={product.description}
+                ratings={product.ratings}
+                category={product.category}
+                onWishlist={true}
+                onRemove={removeFromWishlist}
+              />
+            </Link>
           ))}
         </div>
       )}

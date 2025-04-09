@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import SearchIcon from '@mui/icons-material/Search';
+import { Tooltip } from '@mui/material';
 import './SearchBar.css';
 
 const SearchBar = ({ onSearch, suggestions }) => {
@@ -89,12 +92,16 @@ const SearchBar = ({ onSearch, suggestions }) => {
           </ul>
         )}
       </div>
-      <button type="reset" className="search-button" onClick={handleReset}>
-        Reset
-      </button>
-      <button type="submit" className="search-button">
-        Search
-      </button>
+        <Tooltip title="Reset">
+          <button type="button" className="search-button reset" onClick={handleReset}>
+            <RestartAltIcon />
+          </button>
+        </Tooltip>
+        <Tooltip title="Search">
+          <button type="submit" className="search-button">
+            <SearchIcon />
+          </button>
+        </Tooltip>
     </form>
   );
 };

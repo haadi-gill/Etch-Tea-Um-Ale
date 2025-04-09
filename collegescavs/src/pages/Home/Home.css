@@ -8,7 +8,9 @@
 .content {
   display: flex;
   justify-content: center;
+  transition: margin-left 0.3s ease-in-out;
 }
+
 
 .products {
   display: flex;
@@ -30,18 +32,23 @@ h1 {
 }
 
 .filter-button {
-  position: absolute;
-  top: 102.4px;
-  left: 20px;
-  background-color: #09BC8A;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  z-index: 1000;
-  border-radius: 3px;
-  transition: left 0.3s ease-in-out;
+  background-color: transparent !important;
+  color: #09BC8A !important;
+  border: 2px solid #09BC8A !important;
+  padding: 4px 8px !important;
+  cursor: pointer !important;
+  z-index: 1000 !important;
+  border-radius: 5px !important;
+  font-size: 16px !important;
+  transition: all 0.3s ease-in-out !important;
 }
+
+.filter-button:hover {
+  background-color: #09BC8A !important;
+  color: white !important;
+  border-color: #09BC8A !important;
+}
+
 
 .filter-button.shifted {
   left: 270px;

@@ -47,7 +47,6 @@ const FilterBar = ({ isVisible, filters, onFilterChange, onClose }) => {
 
       <button onClick={applyFilters}>Apply Filters</button>
       <button onClick={resetFilters}>Reset Filters</button>
-      <button className="close-button" onClick={onClose}>✖</button>
     </div>
   );
 };
