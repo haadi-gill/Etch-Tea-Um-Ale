@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Sell.css';
 import { Autocomplete, TextField, Input, Box } from '@mui/material';
 import { categories } from '../../bridge';
-import Tooltip from '@mui/material';
+import { Tooltip } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 const Sell = () => {
@@ -89,9 +89,11 @@ const Sell = () => {
                 </button>
               </div>
             ) : (
-              <label htmlFor="image-upload" className="image-upload-label">
-                <PhotoCameraIcon sx={{ fontSize: 70, color: 'white' }} />
-              </label>
+              <Tooltip title="Upload Image">
+                <label htmlFor="image-upload" className="image-upload-label">
+                  <PhotoCameraIcon sx={{ fontSize: 70, color: 'white' }} />
+                </label>
+            </Tooltip>
             )}
             <Input
               id="image-upload"
