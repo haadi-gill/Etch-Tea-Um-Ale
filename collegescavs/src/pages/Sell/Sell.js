@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Sell.css';
-import { Autocomplete, TextField, Input, Box } from '@mui/material';
+import { Autocomplete, TextField, Input } from '@mui/material';
 import { categories } from '../../bridge';
 import { Tooltip } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
@@ -35,6 +35,9 @@ const Sell = () => {
     }
     if (!formData.category) {
       newErrors.category = 'Category is required';
+    }
+    if (!formData.condition) {
+      newErrors.condition = 'Condition is required';
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -211,6 +214,43 @@ const Sell = () => {
                 isOptionEqualToValue={(option, value) => option === value}
               />
             </div>
+            <div className="form-group">
+              <Autocomplete
+                id="comdition"
+                name="condition"
+                value={formData.condition}
+                onChange={(e, value) => setFormData(prev => ({ ...prev, condition: value }))}
+                options={['New', 'Used']}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Select condition"
+                    variant="outlined"
+                    error={Boolean(errors.condition)}
+                    helperText={errors.condition}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: errors.condition ? '#f44336' : '#09BC8A',
+                          borderWidth: 2,
+                        },
+                        '&:hover fieldset': { borderColor: '#09BC8A' },
+                        '&.Mui-focused fieldset': {
+                          borderColor: '#09BC8A',
+                          boxShadow: '0 0 8px rgba(9,188,138,0.5)',
+                        },
+                      },
+                      '& .MuiInputLabel-root': { '&.Mui-focused': { color: '#09BC8A' } },
+                      '& .MuiInputBase-input': { color: '#D3D3D3' },
+                      '& .MuiAutocomplete-popupIndicator': { color: '#ffffff' },
+                      '& .MuiAutocomplete-popover': { backgroundColor: '#333333', top: '100%' },
+                      '& .MuiAutocomplete-clearIndicator': { color: '#ffffff' },
+                    }}
+                  />
+                )}
+                isOptionEqualToValue={(option, value) => option === value}
+              />
+            </div>
           </div>
         </div>
         <div className="form-group full-width">
@@ -241,7 +281,7 @@ const Sell = () => {
             }}
           />
         </div>
-        <button type="submit" className="submit-btn">Submit</button>
+        <button type="submit" className="submit-btn">List Item</button>
       </form>
     </div>
   );

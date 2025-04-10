@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Card.css';
 import { useWishlist } from '../../context/WishlistContext'; 
+import { useMyListings } from '../../context/MyListingsContext';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarIcon from '@mui/icons-material/Star';
@@ -10,8 +11,11 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import PersonIcon from '@mui/icons-material/Person';
 import { Tooltip } from '@mui/material';
 
-const Card = ({ id, image, title, price, ratings, onWishlist = false, onRemove }) => {
+const Card = ({ id, image, title, price, ratings, sold, onWishlist = false, onRemove }) => {
   const { addToWishlist } = useWishlist();
+  const { myListings, removeFromListings, markAsSold, relistProduct } = useMyListings();
+
+  const productInMyListings = myListings.find((product) => product.id === id);
 
   const handleWishlist = (e) => {
     e.preventDefault();
@@ -21,7 +25,21 @@ const Card = ({ id, image, title, price, ratings, onWishlist = false, onRemove }
       addToWishlist({ id, image, title, price, ratings });
     }
   };
-  
+
+  const handleButtonClick = (e) => {
+    e.preventDefault();
+
+    if (sold) {
+      relistProduct(id);
+    } else {
+      markAsSold(id);
+    }
+  };
+
+  const handleRemoveListing = (e) => {
+    e.preventDefault();
+    removeFromListings(id);
+  };
 
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
@@ -66,6 +84,16 @@ const Card = ({ id, image, title, price, ratings, onWishlist = false, onRemove }
           </button>
         </Tooltip>
       </div>
+      {sold && <div className="sold-tag-card">SOLD</div>}
+
+      {productInMyListings && (
+        <div className="listing-buttons">
+          <button className="sold-btn" onClick={handleButtonClick}>
+            {sold ? 'Relist' : 'Mark as Sold'}
+          </button>
+          <button className="remove-btn" onClick={(e) => handleRemoveListing(e)}>Remove Listing</button>
+        </div>
+      )}
     </div>
   );
 };

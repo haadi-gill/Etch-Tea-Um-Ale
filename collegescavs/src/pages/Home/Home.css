@@ -41,6 +41,10 @@ h1 {
   border-radius: 5px !important;
   font-size: 16px !important;
   transition: all 0.3s ease-in-out !important;
+
+  position: fixed !important;
+  top: 20px;
+  left: 20px;
 }
 
 .filter-button:hover {

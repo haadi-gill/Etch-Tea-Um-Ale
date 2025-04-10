@@ -13,6 +13,7 @@
   margin: 10px;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .card:hover {
@@ -85,3 +86,57 @@
 .wishlist-btn:focus {
   outline: none;
 }
+
+.sold-tag-card {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #db4b4b;
+  color: white;
+  padding: 6px 12px;
+  font-weight: bold;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  z-index: 1;
+}
+
+.listing-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.sold-btn, .remove-btn {
+  background-color: #09BC8A;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.sold-btn:hover, .remove-btn:hover {
+  background-color: #067A64;
+}
+
+.remove-btn {
+  background-color: #db4b4b;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.sold-btn {
+  margin-left: 5px;
+}
+
+.remove-btn:hover {
+  background-color: #9c2a2a;
+}
+
+.listing-buttons {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
