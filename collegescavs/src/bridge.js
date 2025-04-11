@@ -60,10 +60,39 @@ let products = [
 
   ];
 
-function fetchAllListings() {
+async function fetchAllListings() {
     //TODO: Replace with database connection
-    return products;
-
+    
+    
+    try{
+        const res = await fetch('https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/posts.php');
+        if(!res.ok){
+            throw new Error('Network response was not ok');
+        }
+        const data = await res.json();
+        console.log(data);
+        let tempProducts = [];
+        data.forEach(element => {
+            //product = {id: -1,title: "",price: -1,description: "",active: "",seller: "",images:"../assets/phone.png"};
+            let temp = {
+                id: Number(element.post_id),
+                title: element.label,
+                price: Number(element.price),
+                description: element.description,
+                active: element.active,
+                seller: element.user_email,
+                image: '../assets/phone.png' //REPLACE WITH BETTER WAY TO GET IMAGE
+            }
+            tempProducts.push(temp);
+        });
+        console.log(tempProducts);
+        return tempProducts;
+    }
+    catch(error){
+        console.error('Error fetching listings: ',error);
+        return [];
+    }
+    
 }
 
 function fetchListing(listingID) {
@@ -71,20 +100,96 @@ function fetchListing(listingID) {
     return products.find(obj => obj.id === listingID);
 }
 
-function fetchUserListings(email){
-    //TODO: Replace with all user listings from database
+async function fetchUserListings(email){
+    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/posts.php?";
+    const query = new URLSearchParams({
+        method: "post",
+        user_email: email
+    }).toString();
+    const fullURL ='${baseURL}?${query}';
+    try{
+        let listings = await fetch(fullURL);
+        //Reconstruct listings
+        return listings;
+    }
+    catch(error){
+        console.log("Failed to gather listings: ", error);
+        return [];
+    }
+    
 }
 
-function login(email, password){
-    //TODO: Replace with login functionality
+async function login(email, password){
+    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/login.php?";
+    const query = new URLSearchParams({
+        method: "post",
+        email: email,
+        password: password
+    }).toString();
+    const fullURL ='${baseURL}?${query}';
+    try{
+        let correct = await fetch(fullURL);
+        if(correct === "True"){
+            console.log("Login Successful");
+            return true;
+        }
+        else{
+            console.log("Login Failed");
+            return false;
+        }
+    }
+    catch(error){
+        console.log("Failed to login: ", error);
+        return false;
+    }
 }
 
-function uploadListing(listing){
-    //TODO: Replace with backend functionality for uploading
+async function uploadListing(listing){
+    const baseURL= "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/addpost.php?";
+    const query = new URLSearchParams({
+        method: "post",
+        user_email: listing.seller,
+        label: listing.title,
+        description: listing.description,
+        price: listing.price
+        //ADD IMAGE SUPPORT
+    }).toString();
+    const fullURL = '${baseURL}?${query}';
+    try{
+        let test = await fetch(fullURL);
+        //TODO: Fix testing based on results from upload
+        console.log(test);
+    }
+    catch(error){
+        console.error('Error uploading listing: ', error);
+    }
 }
 
-function newUser(email, password){
+async function newUser(email, password){
     //TODO: Replace with email validation and uploading new profile
+    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/signup.php?";
+    const query = new URLSearchParams({
+        method: "post",
+        email: email,
+        password: password
+    }).toString();
+    const fullURL ='${baseURL}?${query}';
+    try{
+        let correct = await fetch(fullURL);
+        if(correct === "True"){
+            console.log("Account Created");
+            return true;
+        }
+        else{
+            console.log("Account Creation Failed");
+            return false;
+        }
+    }
+    catch(error){
+        console.log("Failed to create new account: ", error);
+        return false;
+    }
+    
 }
 
 export { fetchAllListings, fetchListing, fetchUserListings, login, uploadListing, newUser, categories };
