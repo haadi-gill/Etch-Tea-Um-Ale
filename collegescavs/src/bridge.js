@@ -144,14 +144,14 @@ async function login(email, password){
     }
 }
 
-async function uploadListing(listing){
+async function uploadListing(email, title, description, price){
     const baseURL= "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/addpost.php?";
     const query = new URLSearchParams({
         method: "post",
-        user_email: listing.seller,
-        label: listing.title,
-        description: listing.description,
-        price: listing.price
+        user_email: email,
+        label: title,
+        description: description,
+        price: price
         //ADD IMAGE SUPPORT
     }).toString();
     const fullURL = '${baseURL}?${query}';
