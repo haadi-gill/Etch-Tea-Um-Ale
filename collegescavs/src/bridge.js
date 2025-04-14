@@ -60,6 +60,7 @@ let products = [
 
   ];
 
+
 async function fetchAllListings() {
     //TODO: Replace with database connection
     
@@ -99,6 +100,7 @@ function fetchListing(listingID) {
     //TODO: Replace with database search
     return products.find(obj => obj.id === listingID);
 }
+
 
 async function fetchUserListings(email){
     const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/posts.php?";
@@ -191,5 +193,6 @@ async function newUser(email, password){
     }
     
 }
+
 
 export { fetchAllListings, fetchListing, fetchUserListings, login, uploadListing, newUser, categories };

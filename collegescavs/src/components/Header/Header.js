@@ -7,8 +7,21 @@ import SellIcon from '@mui/icons-material/Sell';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { Tooltip } from '@mui/material';
 import './Header.css';
+import LoginOverlay from '../LoginOverlay/LoginOverlay';
 
 const Header = () => {
+  const { user } = useAuth();
+  const [showLogin, setShowLogin] = useState(false);
+  const navigate = useNavigate();
+
+  const handleProfileClick = () => {
+    if (user) {
+      navigate('/profile');
+    } else {
+      setShowLogin(true);
+    }
+  };
+
   return (
     <header className="header">
       <div className="container">
