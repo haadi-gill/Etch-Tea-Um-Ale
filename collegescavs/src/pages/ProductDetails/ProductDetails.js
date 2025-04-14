@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchAllListings } from '../../bridge';
+import { fetchAllListings, fetchListing, fetchUserByEmail } from '../../bridge';
 import './ProductDetails.css';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -9,34 +9,35 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useWishlist } from '../../context/WishlistContext';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useMyListings } from '../../context/MyListingsContext';
+import { useAuth } from '../../context/AuthContext';
 
 const ProductDetails = () => {
+  const { user } = useAuth();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [seller, setSeller] = useState(null);
   const [showSellerInfo, setShowSellerInfo] = useState(false);
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const { myListings, markAsSold, relistProduct, removeFromListings } = useMyListings();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const products = fetchAllListings();
-    const selected = products.find(prod => prod.id === parseInt(id));
-
-    // Add dummy data for the seller
-    if (selected) {
-      selected.seller = {
-        email: 'seller@example.com',
-        phone: '555-123-4567',
-      };
-    }
-
-    setProduct(selected);
+    loadListing();
   }, [id]);
+
+  const loadListing = async () => {
+    const product = await fetchListing(id);
+    const seller = await fetchUserByEmail(product[0].user_email);
+    if (product != null && seller != null) {
+      setProduct(product[0]);
+      setSeller(seller);
+    }
+  };
 
   if (!product) return <div className="loading">Loading...</div>;
 
-  const renderStars = (rating) => {
-    const fullStars = Math.floor(rating);
+  const renderStars = (seller) => {
+    const fullStars = Math.floor(seller.rating);
     const totalStars = 5;
     return (
       <>
@@ -50,12 +51,12 @@ const ProductDetails = () => {
     );
   };
 
-  const isWishlisted = wishlist.some(item => item.id === product.id);
-  const isOwnListing = myListings.some(item => item.id === product.id);
+  const isWishlisted = wishlist.some(item => item.id === product.post_id);
+  const isOwnListing = user && seller && user.email === seller.email;
 
   const toggleWishlist = () => {
     if (isWishlisted) {
-      removeFromWishlist(product.id);
+      removeFromWishlist(product.post_id);
     } else {
       addToWishlist(product);
     }
@@ -75,18 +76,18 @@ const ProductDetails = () => {
   const handleRemoveListing = () => {
     const confirmed = window.confirm('Are you sure you want to remove this listing?');
     if (confirmed) {
-      removeFromListings(product.id);
+      removeFromListings(product.post_id);
       navigate(-1);
     }
   };
 
   const handleMarkAsSold = () => {
-    markAsSold(product.id);
+    markAsSold(product.post_id);
     setProduct((prevProduct) => ({ ...prevProduct, sold: true }));
   };
 
   const handleRelistProduct = () => {
-    relistProduct(product.id);
+    relistProduct(product.post_id);
     setProduct((prevProduct) => ({ ...prevProduct, sold: false }));
   };
 
@@ -97,12 +98,12 @@ const ProductDetails = () => {
       </button>
       <div className="product-box">
         <div className="image-section">
-          <img src={product.image} alt={product.title} />
+          <img src={product.image} alt={product.label} />
         </div>
 
         <div className="info-section">
           <div className="header-row">
-            <h2>{product.title}</h2>
+            <h2>{product.label}</h2>
             <div className="price-and-like">
               <div className="heart-icon" onClick={toggleWishlist}>
                 {isWishlisted ? (
@@ -116,8 +117,8 @@ const ProductDetails = () => {
           </div>
 
           <div className="stars-row">
-            {renderStars(product.ratings)}
-            <span className="numeric-rating">{product.ratings.toFixed(1)}</span>
+            {renderStars(seller)}
+            <span className="numeric-rating">{Number(seller.rating).toFixed(1)}</span>
           </div>
 
           <div className="condition-category">
@@ -167,8 +168,8 @@ const ProductDetails = () => {
 
           {showSellerInfo && (
             <div className="seller-info">
-              <p><strong>Email:</strong> {product.seller.email}</p>
-              <p><strong>Phone:</strong> {product.seller.phone}</p>
+              <p><strong>Email:</strong> {seller.email}</p>
+              <p><strong>Phone:</strong> {seller.phone}</p>
             </div>
           )}
         </div>
