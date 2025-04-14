@@ -1,19 +1,19 @@
 import React from 'react';
-import './Wishlist.css';
-import { useWishlist } from '../../context/WishlistContext';
+import './MyListings.css';
+import { useMyListings } from '../../context/MyListingsContext';
 import { Link } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 
-const Wishlist = () => {
-  const { wishlist, removeFromWishlist } = useWishlist();
+const MyListings = () => {
+  const { myListings, removeFromListings } = useMyListings();
 
   return (
-    <div className="wishlist">
-      {wishlist.length === 0 ? (
-        <p>No items in wishlist.</p>
+    <div className="my-listings">
+      {myListings.length === 0 ? (
+        <p>No items in your listings.</p>
       ) : (
-        <div className="wishlist-grid">
-          {wishlist.map((product) => (
+        <div className="my-listings-grid">
+          {myListings.map((product) => (
             <Link 
               to={`/product/${product.id}`} 
               key={product.id}
@@ -27,8 +27,9 @@ const Wishlist = () => {
                 description={product.description}
                 ratings={product.ratings}
                 category={product.category}
-                onWishlist={true}
-                onRemove={removeFromWishlist}
+                onWishlist={false}
+                sold={product.sold}
+                onRemove={removeFromListings}
               />
             </Link>
           ))}
@@ -38,4 +39,4 @@ const Wishlist = () => {
   );
 };
 
-export default Wishlist;
+export default MyListings;

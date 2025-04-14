@@ -1,4 +1,4 @@
-.wishlist {
+.my-listings {
   text-align: center;
   padding: 20px;
   display: flex;
@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-.wishlist-grid {
+.my-listings-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -15,7 +15,7 @@
   max-width: 1200px;
 }
 
-.wishlist-card {
+.my-listings-card {
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 1rem;
@@ -25,12 +25,12 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.wishlist-card:hover {
+.my-listings-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.wishlist-image {
+.my-listings-image {
   width: 100%;
   height: auto;
   max-height: 200px;

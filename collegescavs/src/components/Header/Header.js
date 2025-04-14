@@ -1,7 +1,11 @@
 import React from 'react';
-import { useAuth } from '../../context/AuthContext.js';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import PersonIcon from '@mui/icons-material/Person';
+import SellIcon from '@mui/icons-material/Sell';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import { Tooltip } from '@mui/material';
 import './Header.css';
 import LoginOverlay from '../LoginOverlay/LoginOverlay';
 
@@ -21,13 +25,33 @@ const Header = () => {
   return (
     <header className="header">
       <div className="container">
-        <h2 className="logo">CollegeScavs</h2>
+        <Link to="/" exact className="nav-link" activeClassName="active"><h2 className="logo">CollegeScavs</h2></Link>
         <nav className="nav">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/sell" className="nav-link">Sell</Link>
-          <button className="nav-link nav-button" onClick={handleProfileClick}>Profile</button>
-          {showLogin && <LoginOverlay onClose={() => setShowLogin(false)} />}
-          <Link to="/wishlist" className="nav-link">Wishlist</Link>
+          <Tooltip title="Home" placement="bottom">
+            <NavLink to="/" exact className="nav-link" activeClassName="active">
+              <HomeIcon className="nav-icon" />
+            </NavLink>
+          </Tooltip>
+          <Tooltip title="Wishlist" placement="bottom">
+            <NavLink to="/wishlist" className="nav-link" activeClassName="active">
+              <FavoriteIcon className="nav-icon" />
+            </NavLink>
+          </Tooltip>
+          <Tooltip title="My Listings" placement="bottom">
+            <NavLink to="/mylistings" className="nav-link" activeClassName="active">
+              <ViewListIcon className="nav-icon" />
+            </NavLink>
+          </Tooltip>
+          <Tooltip title="Sell" placement="bottom">
+            <NavLink to="/sell" className="nav-link" activeClassName="active">
+              <SellIcon className="nav-icon" />
+            </NavLink>
+          </Tooltip>
+          <Tooltip title="Profile" placement="bottom">
+            <NavLink to="/profile" className="nav-link" activeClassName="active">
+              <PersonIcon className="nav-icon" />
+            </NavLink>
+          </Tooltip>
         </nav>
       </div>
     </header>

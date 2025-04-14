@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../../components/Card/Card';
-import Button from '../../components/Button/Button';
 import FilterBar from '../../components/FilterBar/FilterBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { fetchAllListings } from '../../bridge';
+import { Link } from 'react-router-dom';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { Tooltip } from '@mui/material';
 import './Home.css';
+import { useWishlist } from '../../context/WishlistContext';
+import { useMyListings } from '../../context/MyListingsContext';
 
 const Home = () => {
-  const [allProducts, setAllProducts] = useState([]); // Full list
-  const [displayedProducts, setDisplayedProducts] = useState([]); // Filtered + searched
-  const [filters, setFilters] = useState({ price: '', rating: '', category: '' });
+  const [allProducts, setAllProducts] = useState([]);
+  const [displayedProducts, setDisplayedProducts] = useState([]);
+  const [filters, setFilters] = useState({ price: '', rating: '', category: '', condition: '' });
   const [searchQuery, setSearchQuery] = useState('');
   const [isFilterVisible, setIsFilterVisible] = useState(false);
+
+  const { wishlist, removeFromWishlist } = useWishlist();
+  const { myListings } = useMyListings();
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -40,7 +47,8 @@ const Home = () => {
       const matchesFilters =
         (filters.price === '' || product.price <= parseInt(filters.price)) &&
         (filters.rating === '' || product.ratings >= parseFloat(filters.rating)) &&
-        (filters.category === '' || product.category === filters.category);
+        (filters.category === '' || product.category === filters.category) &&
+        (filters.condition === '' || product.condition === filters.condition);
 
       return matchesSearch && matchesFilters;
     });
@@ -51,8 +59,8 @@ const Home = () => {
     setDisplayedProducts(filtered);
   }, [filters, searchQuery, allProducts]);
 
-  const handleAddToCart = (product) => {
-    alert(`Added ${product.title} to cart`);
+  const handleRemoveFromWishlist = (id) => {
+    removeFromWishlist(id);
   };
 
   return (
@@ -62,11 +70,13 @@ const Home = () => {
         suggestions={allProducts.map(p => p.title)}
       />
 
-      <button 
-        className={`filter-button ${isFilterVisible ? 'shifted' : ''}`} 
-        onClick={toggleFilterBar}>
-        Filter
-      </button>
+      <Tooltip title="Filter">
+        <button 
+          className={`filter-button ${isFilterVisible ? 'shifted' : ''}`} 
+          onClick={toggleFilterBar}>
+            <FilterListIcon />
+        </button>
+      </Tooltip>
 
       <FilterBar 
         isVisible={isFilterVisible} 
@@ -77,23 +87,30 @@ const Home = () => {
 
       <div className={`content ${isFilterVisible ? 'shifted' : ''}`}>
         <div className="products">
-          {displayedProducts.map((product) => (
-            <Card
-              key={product.id}
-              id={product.id}
-              image={product.image}
-              title={product.title}
-              price={product.price}
-              description={product.description}
-              ratings={product.ratings}
-              category={product.category}
-              from='home'
-              onClick={() => handleAddToCart(product)}
-            />
-          ))}
+          {displayedProducts
+            .filter((product) => !myListings.some((listing) => listing.id === product.id))
+            .map((product) => (
+              <Link 
+                to={`/product/${product.id}`} 
+                key={product.id} 
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <Card
+                  id={product.id}
+                  image={product.image}
+                  title={product.title}
+                  price={product.price}
+                  description={product.description}
+                  ratings={product.ratings}
+                  category={product.category}
+                  sold={product.sold}
+                  onWishlist={wishlist.some(item => item.id === product.id)}
+                  onRemove={handleRemoveFromWishlist}
+                />
+              </Link>
+            ))}
         </div>
       </div>
-
     </div>
   );
 };

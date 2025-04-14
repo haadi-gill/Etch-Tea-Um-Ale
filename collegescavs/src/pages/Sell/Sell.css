@@ -1,11 +1,13 @@
 .sell-page {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 40px;
-  background-color: #172A3A;
+  max-width: 850px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background: linear-gradient(135deg, rgba(44,36,112,0.3), rgba(9,188,138,0.1));
+  border: 1px solid rgba(9,188,138,0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   color: #75DDDD;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  font-family: 'Helvetica Neue', sans-serif;
 }
 
 .sell-page h1 {
@@ -15,72 +17,123 @@
   color: #09BC8A;
 }
 
+.sell-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-top {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-left {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .form-group {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group.full-width {
+  width: 100%;
 }
 
 .form-group label {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #75DDDD;
-  width: 150px;
-  text-align: right;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+.MuiTextField-root {
   width: 100%;
-  padding: 12px;
+}
+
+.MuiFormHelperText-root {
+  font-size: 0.9rem;
+  color: #ff4d4d;
+}
+
+.image-upload-label {
+  display: inline-block;
+  background-color: transparent;
+  color: white;
+  padding: 64px 40px;
+  cursor: pointer;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.5rem;
+  border: 3px dashed #09BC8A;
+}
+
+
+.image-preview {
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-preview-img {
+  max-width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.remove-image-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #f44336;
+  color: white;
   font-size: 1rem;
-  border: 2px solid #508991;
-  border-radius: 6px;
-  background-color: #004346;
-  color: #75DDDD;
-  transition: all 0.3s ease;
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: #75DDDD;
-  opacity: 0.7;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: #09BC8A;
-  box-shadow: 0 0 8px rgba(9, 188, 138, 0.5);
-}
-
-.form-group textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.form-group button {
-  background-color: #09BC8A;
-  color: #172A3A;
-  padding: 14px 24px;
-  font-size: 1.2rem;
-  font-weight: bold;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.form-group button:hover {
+.remove-image-btn:hover {
+  background-color: #d32f2f;
+}
+
+.submit-btn {
+  padding: 14px 24px;
+  background-color: #09BC8A;
+  color: #172A3A;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-end;
+}
+
+.submit-btn:hover {
   background-color: #508991;
+}
+
+.error-text {
+  color: #f44336;
+  font-size: 12px;
 }
 
 .error {
   color: #ff4d4d;
   font-size: 0.9rem;
-  margin-top: 5px;
-  margin-bottom: 0;
+  margin: 0;
 }
