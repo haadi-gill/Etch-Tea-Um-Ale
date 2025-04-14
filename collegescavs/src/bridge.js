@@ -70,7 +70,7 @@ async function fetchAllListings() {
             throw new Error('Network response was not ok');
         }
         const data = await res.json();
-        console.log(data);
+        //console.log(data);
         let tempProducts = [];
         data.forEach(element => {
             //product = {id: -1,title: "",price: -1,description: "",active: "",seller: "",images:"../assets/phone.png"};
@@ -85,7 +85,7 @@ async function fetchAllListings() {
             }
             tempProducts.push(temp);
         });
-        console.log(tempProducts);
+        //console.log(tempProducts);
         return tempProducts;
     }
     catch(error){
@@ -95,20 +95,35 @@ async function fetchAllListings() {
     
 }
 
-function fetchListing(listingID) {
-    //TODO: Replace with database search
-    return products.find(obj => obj.id === listingID);
+async function fetchListing(listingID) {
+    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/posts.php";
+    const query = new URLSearchParams({
+        method: "post",
+        id: listingID
+    }).toString();
+    const fullURL =`${baseURL}?${query}`;
+    try{
+        let res = await fetch(fullURL);
+        const listings = await res.json();
+        //Reconstruct listings
+        return listings;
+    }
+    catch(error){
+        console.log("Failed to gather listings: ", error);
+        return [];
+    }
 }
 
 async function fetchUserListings(email){
-    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/posts.php?";
+    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/posts.php";
     const query = new URLSearchParams({
         method: "post",
-        user_email: email
+        email: email
     }).toString();
-    const fullURL ='${baseURL}?${query}';
+    const fullURL =`${baseURL}?${query}`;
     try{
-        let listings = await fetch(fullURL);
+        let res = await fetch(fullURL);
+        const listings = await res.json();
         //Reconstruct listings
         return listings;
     }
@@ -120,22 +135,23 @@ async function fetchUserListings(email){
 }
 
 async function login(email, password){
-    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/login.php?";
+    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/login.php";
     const query = new URLSearchParams({
         method: "post",
         email: email,
         password: password
     }).toString();
-    const fullURL ='${baseURL}?${query}';
+    const fullURL =`${baseURL}?${query}`;
     try{
-        let correct = await fetch(fullURL);
+        let res = await fetch(fullURL);
+        let correct = await res.json();
         if(correct === "True"){
             console.log("Login Successful");
-            return true;
+            return correct;
         }
         else{
-            console.log("Login Failed");
-            return false;
+            console.log("Login Failed!");
+            return correct;
         }
     }
     catch(error){
@@ -145,7 +161,7 @@ async function login(email, password){
 }
 
 async function uploadListing(email, title, description, price){
-    const baseURL= "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/addpost.php?";
+    const baseURL= "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/addpost.php";
     const query = new URLSearchParams({
         method: "post",
         user_email: email,
@@ -154,35 +170,44 @@ async function uploadListing(email, title, description, price){
         price: price
         //ADD IMAGE SUPPORT
     }).toString();
-    const fullURL = '${baseURL}?${query}';
+    const fullURL = `${baseURL}?${query}`;
     try{
-        let test = await fetch(fullURL);
-        //TODO: Fix testing based on results from upload
-        console.log(test);
+        let res = await fetch(fullURL);
+        let test = await res.json();
+        if(test === true){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     catch(error){
         console.error('Error uploading listing: ', error);
     }
 }
 
-async function newUser(email, password){
-    //TODO: Replace with email validation and uploading new profile
-    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/signup.php?";
+async function newUser(email, password, first, last){
+    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/signup.php";
     const query = new URLSearchParams({
         method: "post",
         email: email,
-        password: password
+        password: password,
+        first_name: first,
+        last_name: last,
+        rating: 5.0
     }).toString();
-    const fullURL ='${baseURL}?${query}';
+    const fullURL =`${baseURL}?${query}`;
     try{
-        let correct = await fetch(fullURL);
-        if(correct === "True"){
+        
+        let res = await fetch(fullURL);
+        let correct = await res.json();
+        if(correct === true){
             console.log("Account Created");
-            return true;
+            return correct;
         }
         else{
             console.log("Account Creation Failed");
-            return false;
+            return correct;
         }
     }
     catch(error){
