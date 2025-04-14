@@ -10,6 +10,7 @@ import './Header.css';
 import LoginOverlay from '../LoginOverlay/LoginOverlay';
 
 const Header = () => {
+  /*
   const { user } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Header = () => {
       setShowLogin(true);
     }
   };
+  */
 
   return (
     <header className="header">

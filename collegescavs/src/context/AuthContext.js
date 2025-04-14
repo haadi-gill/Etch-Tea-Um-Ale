@@ -1,29 +1,43 @@
-import React, { createContext, useContext, useState } from 'react';
-import { login as bridgeLogin } from '../bridge.js'
-
-/*
-This page contains functionality for logging in a user and searching the
-database for existing users and their matching information
-Utilized in App.js to allow for the user to be stored across the entire
-application
-*/
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { login as backendLogin, fetchUserByEmail } from '../bridge.js';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    // Load from localStorage when app first runs
+    const saved = localStorage.getItem('user');
+    return saved ? JSON.parse(saved) : null;
+  });
 
-  const login = (email, password) => {
-    const user = bridgeLogin(email, password);
+  // Keep user in localStorage when updated
+  useEffect(() => {
     if (user) {
-      setUser(user);
-      return true;
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
     }
-    return false;
+  }, [user]);
+
+  const login = async (email, password) => {
+    const success = await backendLogin(email, password);
+    if (success) {
+      const userData = await fetchUserByEmail(email);
+      if (userData) {
+        setUser(userData);
+        return true;
+      } else {
+        console.error("Login succeeded, but failed to get user data");
+        return false;
+      }
+    } else {
+      return false;
+    }
   };
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('user');
   };
 
   return (
