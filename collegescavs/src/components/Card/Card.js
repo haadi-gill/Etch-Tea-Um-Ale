@@ -69,12 +69,12 @@ const Card = ({ id, image, title, price, ratings, sold, onWishlist = false, onRe
         <div className="card-title-price">
           <h3 className="card-title">{title}</h3>
           <p className="card-price">${price}</p>
-          <Tooltip title={`User Rating: ${ratings} stars`}>
+          {/* <Tooltip title={`User Rating: ${ratings} stars`}>
             <div className="card-rating">
               <PersonIcon style={{ color: '#09BC8A', fontSize: '1.2rem' }} />
               {renderStars(ratings)}
             </div>
-          </Tooltip>
+          </Tooltip> */}
         </div>
         <Tooltip title={onWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}>
           <button className="wishlist-btn" onClick={handleWishlist}>

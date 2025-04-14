@@ -63,7 +63,3 @@ body {
   cursor: pointer;
   color: #75DDDD;
 }
-
-.nav-link:hover {
-  text-decoration: underline;
-}
