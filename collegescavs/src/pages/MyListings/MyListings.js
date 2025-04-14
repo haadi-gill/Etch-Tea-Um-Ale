@@ -16,14 +16,16 @@ const MyListings = () => {
 
   useEffect(() => {
     loadListing();
-  }, [user.email]);
+  }, [user]);
   
   const loadListing = async () => {
-    const myListings = await fetchUserListings(user.email);
-    const seller = user;
-    if (product != null && seller != null) {
-      setProduct(product[0]);
-      setSeller(seller);
+    if (user?.email) {
+      const myListings = await fetchUserListings(user.email);
+      setProduct(myListings);
+      setSeller(user);
+    } else {
+      setProduct(null);
+      setSeller(null);
     }
   };
 
