@@ -6,6 +6,7 @@ import Header from './components/Header/Header';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
 import Wishlist from './pages/WishList/Wishlist';
 import Sell from './pages/Sell/Sell';
+import Profile from './pages/Profile/Profile';
 import { WishlistProvider } from './context/WishlistContext';
 import MyListings from './pages/MyListings/MyListings';
 import { MyListingsProvider } from './context/MyListingsContext';
