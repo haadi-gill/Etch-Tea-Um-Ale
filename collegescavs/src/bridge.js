@@ -60,7 +60,6 @@ let products = [
 
   ];
 
-
 async function fetchAllListings() {
     //TODO: Replace with database connection
     
@@ -115,7 +114,6 @@ async function fetchListing(listingID) {
     }
 }
 
-
 async function fetchUserListings(email){
     const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/posts.php";
     const query = new URLSearchParams({
@@ -140,8 +138,8 @@ async function login(email, password){
     const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/login.php";
     const query = new URLSearchParams({
         method: "post",
-        email,
-        password
+        email: email,
+        password: password
     }).toString();
     const fullURL =`${baseURL}?${query}`;
     try{
@@ -155,41 +153,12 @@ async function login(email, password){
             console.log("Login Failed!");
             return correct;
         }
-    } catch (error) {
-        console.error("Could not retrieve user: ", error);
+    }
+    catch(error){
+        console.log("Failed to login: ", error);
         return false;
     }
 }
-
-async function fetchUserByEmail(email) {
-    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/users.php?";
-    const query = new URLSearchParams({
-        method: "post",
-        email
-    }).toString();
-    
-    const fullURL = `${baseURL}?${query}`;
-    
-    try {
-        const res = await fetch(fullURL);
-        const data = await res.json();
-    
-        if (Array.isArray(data) && data.length > 0) {
-        const user = {
-            email: data[0].email,
-            name: `${data[0].first_name} ${data[0].last_name}`,
-            rating: data[0].rating,
-        };
-        return user;
-        } else {
-        return null;
-        }
-    } catch (error) {
-        console.error("Could not retrieve user info: ", error);
-        return null;
-    }
-  }
-  
 
 async function uploadListing(email, title, description, price){
     const baseURL= "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/addpost.php";
@@ -240,11 +209,12 @@ async function newUser(email, password, first, last){
             console.log("Account Creation Failed");
             return correct;
         }
-    } catch (error) {
-        console.log("Failed to create new account:", error);
+    }
+    catch(error){
+        console.log("Failed to create new account: ", error);
         return false;
     }
+    
 }
 
-
-export { fetchAllListings, fetchListing, fetchUserListings, login, fetchUserByEmail, uploadListing, newUser, categories };
+export { fetchAllListings, fetchListing, fetchUserListings, login, uploadListing, newUser, categories };
