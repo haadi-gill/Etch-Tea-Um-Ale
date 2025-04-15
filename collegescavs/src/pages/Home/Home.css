@@ -57,3 +57,9 @@ h1 {
 .filter-button.shifted {
   left: 270px;
 }
+
+.loading-container {
+  display: flex;
+  min-height: 200px;
+  margin-top: 10px;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchAllListings, fetchListing, fetchUserByEmail } from '../../bridge';
+import { fetchListing, fetchUserByEmail } from '../../bridge';
 import './ProductDetails.css';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -10,6 +10,7 @@ import { useWishlist } from '../../context/WishlistContext';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useMyListings } from '../../context/MyListingsContext';
 import { useAuth } from '../../context/AuthContext';
+import { CircularProgress } from '@mui/material';
 
 const ProductDetails = () => {
   const { user } = useAuth();
@@ -34,7 +35,7 @@ const ProductDetails = () => {
     }
   };
 
-  if (!product) return <div className="loading">Loading...</div>;
+  if (!product) return <div className="loading"><CircularProgress color='aqua' /></div>;
 
   const renderStars = (seller) => {
     const fullStars = Math.floor(seller.rating);
@@ -169,7 +170,6 @@ const ProductDetails = () => {
           {showSellerInfo && (
             <div className="seller-info">
               <p><strong>Email:</strong> {seller.email}</p>
-              <p><strong>Phone:</strong> {seller.phone}</p>
             </div>
           )}
         </div>
