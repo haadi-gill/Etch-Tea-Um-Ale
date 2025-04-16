@@ -87,8 +87,8 @@ const Sell = () => {
     if (user) {
       formData.user_email = user.email;
     } else {
-      //alert('Please sign in to post a new listing!');
-      //return;
+      alert('Please sign in to post a new listing!');
+      return;
     }
     if (validate()) {
 
