@@ -19,6 +19,7 @@ const Sell = () => {
     user_email: ''
   });
   const [errors, setErrors] = useState({});
+  const [imageFile, setImageFile] = useState(null);
 
 
   const validate = () => {
@@ -67,6 +68,7 @@ const Sell = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setFormData(prev => ({ ...prev, image: reader.result }));
+        setImageFile(file);
       };
       reader.readAsDataURL(file);
     } else {
@@ -85,9 +87,36 @@ const Sell = () => {
     if (user) {
       formData.user_email = user.email;
     } else {
-      alert('Please sign in to post a new listing!');
+      //alert('Please sign in to post a new listing!');
+      //return;
     }
     if (validate()) {
+
+      if (imageFile) {
+        const uploadData = new FormData();
+        uploadData.append('file', imageFile);
+        uploadData.append('upload_preset', 'react_unsigned_upload');
+  
+        const res = await fetch(`https://api.cloudinary.com/v1_1/dwslsphgi/image/upload`, {
+          method: 'POST',
+          body: uploadData,
+        });
+  
+        const data = await res.json();
+  
+        if (!data.secure_url) {
+          throw new Error('Image upload failed');
+        }
+        
+        var imageUrl = data.secure_url;
+        setFormData(prev => ({ ...prev, image: imageUrl }));
+        console.log(imageUrl);
+      }
+      else{
+        console.log("Failed to upload image");
+        return;
+      }
+
       console.log('Form data ready for backend:', formData);
       const success = await uploadListing(formData.user_email.toString(), formData.title.toString(), formData.description.toString(), formData.price.toString(), formData.category.toString(), formData.condition.toString());
       if (success) {
