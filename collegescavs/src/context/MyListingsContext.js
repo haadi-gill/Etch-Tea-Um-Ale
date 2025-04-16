@@ -33,7 +33,7 @@ export const MyListingsProvider = ({ children }) => {
   const markAsSold = (id) => {
     setMyListings((prev) =>
       prev.map((product) =>
-        product.post_id === id ? { ...product, sold: true } : product
+        product.post_id === id ? { ...product, active: "N" } : product
       )
     );
   };
@@ -41,13 +41,21 @@ export const MyListingsProvider = ({ children }) => {
   const relistProduct = (id) => {
     setMyListings((prev) =>
       prev.map((product) =>
-        product.post_id === id ? { ...product, sold: false } : product
+        product.post_id === id ? { ...product, active: "Y" } : product
+      )
+    );
+  };
+
+  const updateListingStatus = (id, isActive) => {
+    setMyListings((prev) =>
+      prev.map((product) =>
+        product.post_id === id ? { ...product, active: isActive ? 'Y' : 'N' } : product
       )
     );
   };
 
   return (
-    <MyListingsContext.Provider value={{ myListings, removeFromListings, markAsSold, relistProduct }}>
+    <MyListingsContext.Provider value={{ myListings, removeFromListings, markAsSold, relistProduct, updateListingStatus }}>
       {children}
     </MyListingsContext.Provider>
   );

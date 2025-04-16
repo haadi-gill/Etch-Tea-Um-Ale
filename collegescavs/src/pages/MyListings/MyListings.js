@@ -1,17 +1,15 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { fetchListing, fetchUserByEmail, fetchUserListings } from '../../bridge';
+import React, { useEffect, useState } from 'react';
+import { fetchUserListings } from '../../bridge';
 import './MyListings.css';
 import { useMyListings } from '../../context/MyListingsContext';
 import { Link } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 import { useAuth } from '../../context/AuthContext';
 
-
 const MyListings = () => {
   const { myListings, removeFromListings } = useMyListings();
-  const {user} = useAuth();
-  const [product, setProduct] = useState(null);
+  const { user } = useAuth();
+  const [product, setProduct] = useState([]);
   const [seller, setSeller] = useState(null);
 
   useEffect(() => {
@@ -20,16 +18,19 @@ const MyListings = () => {
   
   const loadListing = async () => {
     if (user?.email) {
-      const myListings = await fetchUserListings(user.email);
-      setProduct(myListings);
+      const myListingsData = await fetchUserListings(user.email);
+      setProduct(myListingsData);
+      // Here we set the seller as the current user
       setSeller(user);
     } else {
-      setProduct(null);
+      setProduct([]);
       setSeller(null);
     }
   };
-  
-  
+
+  // Compute isOwnListing just like in ProductDetails:
+  const isOwnListing = user && seller && user.email === seller.email;
+
   return (
     <div className="my-listings">
       {myListings.length === 0 ? (
@@ -51,8 +52,9 @@ const MyListings = () => {
                 ratings={user.rating}
                 category={product.category}
                 onWishlist={false}
-                sold={product.sold}
+                active={product.active}
                 onRemove={removeFromListings}
+                isOwnListing={isOwnListing}
               />
             </Link>
           ))}
@@ -60,7 +62,6 @@ const MyListings = () => {
       )}
     </div>
   );
-  
 };
 
 export default MyListings;

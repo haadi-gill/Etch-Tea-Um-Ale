@@ -114,26 +114,34 @@ async function fetchListing(listingID) {
     }
 }
 
-async function updateListing(listingID) {
+async function updateListing(listingID, currentStatus) {
     const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/editpost.php";
+  
+    const newStatus = currentStatus === 'Y' ? 'N' : 'Y';
+  
     const query = new URLSearchParams({
-        method: "post",
-        ID: listingID,
-        active: 'N'
+      method: "post",
+      id: listingID,
+      active: newStatus
     }).toString();
-    const fullURL =`${baseURL}?${query}`;
-    try{
-        let res = await fetch(fullURL);
-        const listings = await res.json();
-        console.log(listings);
-        //Reconstruct listings
-        return listings;
+  
+    const fullURL = `${baseURL}?${query}`;
+  
+    try {
+      const res = await fetch(fullURL);
+      const response = await res.text();
+      console.log("Server response:", response);
+  
+      if (response.trim() === "true") {
+        return newStatus;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log("Failed to update listing:", error);
+      return null;
     }
-    catch(error){
-        console.log("Failed to gather listings: ", error);
-        return [];
-    }
-}
+  }
 
 async function fetchUserListings(email){
     const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/posts.php";
