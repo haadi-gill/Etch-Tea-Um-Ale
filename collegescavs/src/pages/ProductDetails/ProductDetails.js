@@ -102,6 +102,15 @@ const ProductDetails = () => {
     setProduct((prevProduct) => ({ ...prevProduct, sold: false }));
   };
 
+  const handleToggleListingStatus = async () => {
+    const newStatus = await updateListing(product.post_id, product.active);
+    if (newStatus !== null) {
+      setProduct(prev => ({ ...prev, active: newStatus }));
+    } else {
+      console.error('Failed to update listing status');
+    }
+  };
+
   return (
     <div className="product-details-page">
       <button className="back-btn" onClick={handleBackClick}>
@@ -116,6 +125,7 @@ const ProductDetails = () => {
           <div className="header-row">
             <h2>{product.label}</h2>
             <div className="price-and-like">
+              {/* Wishlist toggle is commented out, you can enable this if needed */}
               {/* <div className="heart-icon" onClick={toggleWishlist}>
                 {isWishlisted ? (
                   <FavoriteIcon style={{ color: '#ff6b81' }} />
@@ -137,33 +147,23 @@ const ProductDetails = () => {
             <p className='cat'><strong>Category:</strong> {product.category}</p>
           </div>
 
-          {product.sold && <div className="sold-tag">SOLD</div>}
+          {product.active === 'N' && <div className="sold-tag">SOLD</div>}
 
-          {!isOwnListing && !product.sold && (
+          {!isOwnListing && product.active === 'Y' && (
             <button 
-              className={`contact-btn ${product.sold ? 'disabled' : ''}`}
+              className="contact-btn"
               onClick={handleContactSeller}
-              disabled={product.sold}
             >
               Contact Seller
             </button>
           )}
 
-          {isOwnListing && !product.sold && (
+          {isOwnListing && (
             <button 
               className="contact-btn" 
-              onClick={handleMarkAsSold}
+              onClick={handleToggleListingStatus}
             >
-              Mark as Sold
-            </button>
-          )}
-
-          {isOwnListing && product.sold && (
-            <button 
-              className="contact-btn" 
-              onClick={handleRelistProduct}
-            >
-              Relist Product
+              {product.active === 'N' ? 'Relist Product' : 'Mark as Sold'}
             </button>
           )}
 
