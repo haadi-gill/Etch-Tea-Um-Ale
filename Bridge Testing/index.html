@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <title>External JavaScript Example</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    #output {
+      padding: 20px;
+      background-color: #fff;
+      border: 2px solid #28a745;
+      border-radius: 8px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+    }
+    </style>
+</head>
+<body>
+    <button onclick="test()">Run Script</button>
+    <br>
+    <div id="output">Click the button to run the script.</div>
+    
+
+    <!-- External JavaScript file -->
+
+    <script type="module">
+
+        import {
+            fetchAllListings,
+            fetchListing,
+            fetchUserListings,
+            login,
+            uploadListing,
+            newUser,
+            categories
+        } from './bridge.js';
+
+
+        window.test = async function test(){
+            console.log("Running tests");
+            const output = document.getElementById("output");
+            output.innerHTML = '';
+
+            fetchAllListings().then((listings) => {
+                console.log("Fetched Listings: ", listings);
+                output.innerHTML += `<p>Fetched ${listings.length} listings</p>`;
+            }).catch(err => {
+                console.error("Error fetching listings:", err);
+                output.innerHTML += "<p>Error: Could not fetch</p>";
+            });
+
+            fetchListing("1").then((listings) => {
+                console.log("Fetched ID Listings: ", listings);
+                output.innerHTML += `<p>Fetched ${listings.length} ID listings</p>`;
+            }).catch(err => {
+                console.error("Error fetching ID listings:", err);
+                output.innerHTML += "<p>Error: Could not fetch user listings</p>";
+            });
+            
+            fetchUserListings("test@ufl.edu").then((listings) => {
+                console.log("Fetched User Listings: ", listings);
+                output.innerHTML += `<p>Fetched ${listings.length} User listings</p>`;
+            }).catch(err => {
+                console.error("Error fetching user listings:", err);
+                output.innerHTML += "<p>Error: Could not fetch user listings</p>";
+            });
+            
+            login('test@ufl.edu', 'Failed').then((correct) => {
+                console.log("Attempted login (expected failure): ", correct);
+                output.innerHTML += `<p>Login (expected false): ${correct}</p>`;
+            }).catch(err => {
+                console.error("Error logging in: ", err);
+                output.innerHTML += "<p>Error: Could not login</p>"
+            });
+
+            login('test@ufl.edu', "password123").then((correct) => {
+                console.log("Attempted login (expected true): ", correct);
+                output.innerHTML += `<p>Login (expected true): ${correct}</p>`;
+            }).catch(err => {
+                console.error("Error logging in: ", err);
+                output.innerHTML += "<p>Error: Could not login</p>"
+            });
+            
+            newUser('newemail@ufl.edu', 'SecurePassword', 'NewUser', 'Test').then((created) => {
+                console.log("Attempted new user: ", created);
+                output.innerHTML += `<p>New User: ${created}</p>`;
+            }).catch(err => {
+                console.error("Error creating account: ", err);
+                output.innerHTML += `<p>Error: Could not create account`;
+            });
+            
+            uploadListing("newemail@ufl.edu", "Huge Hug", "Get a hug", "500", "Furniture", "Good", "image.png").then((u) => {
+                console.log("Attempted upload: ", correct);
+                output.innerHTML += `<p>Uploaded: ${correct}</p>`;
+            }).catch(err => {
+                console.error("Error logging in: ", err);
+                output.innerHTML += "<p>Error: Could not upload</p>"
+            });
+        }
+    </script>
+
+</body>
+</html>
