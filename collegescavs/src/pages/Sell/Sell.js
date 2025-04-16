@@ -118,7 +118,7 @@ const Sell = () => {
       }
 
       console.log('Form data ready for backend:', formData);
-      const success = await uploadListing(formData.user_email.toString(), formData.title.toString(), formData.description.toString(), formData.price.toString(), formData.category.toString(), formData.condition.toString());
+      const success = await uploadListing(formData.user_email.toString(), formData.title.toString(), formData.description.toString(), formData.price.toString(), imageUrl, formData.condition.toString(),  formData.category.toString(),);
       if (success) {
         alert('Item listed successfully!');
       } else {

@@ -217,7 +217,7 @@ async function fetchUserByEmail(email) {
     }
 }
 
-async function uploadListing(email, title, description, price, condition, category){
+async function uploadListing(email, title, description, price, image, condition, category){
     const baseURL= "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/addpost.php";
     const query = new URLSearchParams({
         method: "post",
@@ -225,7 +225,7 @@ async function uploadListing(email, title, description, price, condition, catego
         label: title,
         description: description,
         price: price,
-        images: 'image',
+        images: image,
         condition: condition,
         category: category
         //ADD IMAGE SUPPORT
