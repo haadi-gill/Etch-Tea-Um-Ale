@@ -20,7 +20,6 @@ const MyListings = () => {
     if (user?.email) {
       const myListingsData = await fetchUserListings(user.email);
       setProduct(myListingsData);
-      // Here we set the seller as the current user
       setSeller(user);
     } else {
       setProduct([]);
@@ -28,7 +27,6 @@ const MyListings = () => {
     }
   };
 
-  // Compute isOwnListing just like in ProductDetails:
   const isOwnListing = user && seller && user.email === seller.email;
 
   return (
