@@ -278,4 +278,32 @@ async function newUser(email, password, first, last){
     
 }
 
-export { fetchAllListings, fetchListing, updateListing, fetchUserListings, login, fetchUserByEmail, uploadListing, newUser, categories };
+
+// needs to be altered
+async function removeListing(listingID, currentStatus) {
+    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/removepost.php";
+  
+    const query = new URLSearchParams({
+      method: "post",
+      id: listingID,
+    }).toString();
+  
+    const fullURL = `${baseURL}?${query}`;
+  
+    try {
+      const res = await fetch(fullURL);
+      const response = await res.text();
+      console.log("Server response:", response);
+  
+      if (response.trim() === "true") {
+        return true;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log("Failed to remove listing:", error);
+      return null;
+    }
+  }
+
+export { fetchAllListings, fetchListing, updateListing, fetchUserListings, login, fetchUserByEmail, uploadListing, newUser, removeListing, categories };

@@ -10,7 +10,7 @@ import StarHalfIcon from '@mui/icons-material/StarHalf';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import PersonIcon from '@mui/icons-material/Person';
 import { Tooltip } from '@mui/material';
-import { updateListing } from '../../bridge';
+import { updateListing, removeListing } from '../../bridge';
 
 const Card = ({
   id,
@@ -46,9 +46,10 @@ const Card = ({
     }
   };
 
-  const handleRemoveListing = (e) => {
+  const handleRemoveListing = async (e) => {
     e.preventDefault();
     removeFromListings(id);
+    await removeListing(id);
   };
 
   const renderStars = (rating) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchListing, fetchUserByEmail, updateListing } from '../../bridge';
+import { fetchListing, fetchUserByEmail, removeListing, updateListing } from '../../bridge';
 import './ProductDetails.css';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -87,19 +87,10 @@ const ProductDetails = () => {
     const confirmed = window.confirm('Are you sure you want to remove this listing?');
     if (confirmed) {
       removeFromListings(product.post_id);
+      await removeListing(product.post_id);
       const success = await updateListing(product.post_id);
       navigate(-1);
     }
-  };
-
-  const handleMarkAsSold = () => {
-    markAsSold(product.post_id);
-    setProduct((prevProduct) => ({ ...prevProduct, sold: true }));
-  };
-
-  const handleRelistProduct = () => {
-    relistProduct(product.post_id);
-    setProduct((prevProduct) => ({ ...prevProduct, sold: false }));
   };
 
   const handleToggleListingStatus = async () => {
