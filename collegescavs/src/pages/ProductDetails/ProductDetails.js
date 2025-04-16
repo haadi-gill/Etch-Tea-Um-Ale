@@ -52,14 +52,23 @@ const ProductDetails = () => {
     );
   };
 
-  const isWishlisted = wishlist.some(item => item.id === product.post_id);
+  const isWishlisted = wishlist.some(item => item.id === product.id);
+  console.log('isWishlisted:', isWishlisted);
   const isOwnListing = user && seller && user.email === seller.email;
 
   const toggleWishlist = () => {
+    const wishlistItem = {
+      id: product.id,
+      image: product.image,
+      title: product.label,
+      price: product.price,
+      ratings: seller.rating,
+    };
+  
     if (isWishlisted) {
-      removeFromWishlist(product.post_id);
+      removeFromWishlist(product.id);
     } else {
-      addToWishlist(product);
+      addToWishlist(wishlistItem);
     }
   };
 
@@ -106,13 +115,13 @@ const ProductDetails = () => {
           <div className="header-row">
             <h2>{product.label}</h2>
             <div className="price-and-like">
-              <div className="heart-icon" onClick={toggleWishlist}>
+              {/* <div className="heart-icon" onClick={toggleWishlist}>
                 {isWishlisted ? (
                   <FavoriteIcon style={{ color: '#ff6b81' }} />
                 ) : (
                   <FavoriteBorderIcon style={{ color: '#ff6b81' }} />
                 )}
-              </div>
+              </div> */}
               <div className="price-tag">${product.price}</div>
             </div>
           </div>
