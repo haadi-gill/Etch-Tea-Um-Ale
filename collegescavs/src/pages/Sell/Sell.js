@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import './Sell.css';
-import { Autocomplete, TextField, Input } from '@mui/material';
-import { categories } from '../../bridge';
+import { Autocomplete, TextField, Input, ImageList } from '@mui/material';
+import { categories, uploadListing } from '../../bridge';
+import { useAuth } from '../../context/AuthContext';
 import { Tooltip } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 const Sell = () => {
+  const {user} = useAuth();
   const [formData, setFormData] = useState({
     title: '',
     price: '',
     description: '',
     image: '',
     ratings: '',
-    category: ''
+    category: '',
+    condition: '',
+    user_email: ''
   });
   const [errors, setErrors] = useState({});
 
+
   const validate = () => {
     const newErrors = {};
+    console.log("USER: " + user);
     if (!formData.title || formData.title.length > 50) {
       newErrors.title = 'Title is required and must be less than 50 characters';
     }
@@ -30,9 +36,11 @@ const Sell = () => {
     if (!formData.image) {
       newErrors.image = 'Image is required';
     }
+    /*
     if (!formData.ratings || isNaN(formData.ratings) || formData.ratings < 0 || formData.ratings > 5) {
       newErrors.ratings = 'Ratings must be between 0 and 5';
     }
+    */
     if (!formData.category) {
       newErrors.category = 'Category is required';
     }
@@ -40,6 +48,7 @@ const Sell = () => {
       newErrors.condition = 'Condition is required';
     }
     setErrors(newErrors);
+    console.log(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
@@ -70,11 +79,22 @@ const Sell = () => {
     setErrors(prev => ({ ...prev, image: '' }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Entered submit, validate: " + validate());
+    if (user) {
+      formData.user_email = user.email;
+    } else {
+      alert('Please sign in to post a new listing!');
+    }
     if (validate()) {
       console.log('Form data ready for backend:', formData);
-      alert('Item listed successfully! (Backend integration pending)');
+      const success = await uploadListing(formData.user_email.toString(), formData.title.toString(), formData.description.toString(), formData.price.toString(), formData.category.toString(), formData.condition.toString());
+      if (success) {
+        alert('Item listed successfully!');
+      } else {
+        alert('Error uploading listing');
+      }
     }
   };
 

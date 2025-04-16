@@ -28,8 +28,7 @@ const MyListings = () => {
       setSeller(null);
     }
   };
-
-
+  
   
   return (
     <div className="my-listings">

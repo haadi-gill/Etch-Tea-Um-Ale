@@ -5,12 +5,10 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    // Load from localStorage when app first runs
     const saved = localStorage.getItem('user');
     return saved ? JSON.parse(saved) : null;
   });
 
-  // Keep user in localStorage when updated
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));

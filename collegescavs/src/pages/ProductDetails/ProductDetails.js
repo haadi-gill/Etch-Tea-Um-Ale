@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchListing, fetchUserByEmail } from '../../bridge';
+import { fetchListing, fetchUserByEmail, updateListing } from '../../bridge';
 import './ProductDetails.css';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -52,13 +52,13 @@ const ProductDetails = () => {
     );
   };
 
-  const isWishlisted = wishlist.some(item => item.id === product.id);
+  const isWishlisted = wishlist.some(item => item.id === product.post_id);
   console.log('isWishlisted:', isWishlisted);
   const isOwnListing = user && seller && user.email === seller.email;
 
   const toggleWishlist = () => {
     const wishlistItem = {
-      id: product.id,
+      id: product.product_id,
       image: product.image,
       title: product.label,
       price: product.price,
@@ -66,7 +66,7 @@ const ProductDetails = () => {
     };
   
     if (isWishlisted) {
-      removeFromWishlist(product.id);
+      removeFromWishlist(product.post_id);
     } else {
       addToWishlist(wishlistItem);
     }
@@ -83,10 +83,11 @@ const ProductDetails = () => {
     navigate(-1);
   };
 
-  const handleRemoveListing = () => {
+  const handleRemoveListing = async () => {
     const confirmed = window.confirm('Are you sure you want to remove this listing?');
     if (confirmed) {
       removeFromListings(product.post_id);
+      const success = await updateListing(product.post_id);
       navigate(-1);
     }
   };
@@ -132,7 +133,7 @@ const ProductDetails = () => {
           </div>
 
           <div className="condition-category">
-            <p className='cond'><strong>Condition:</strong> {product.condition}</p>
+            <p className='cond'><strong>Condition:</strong> {product.cond}</p>
             <p className='cat'><strong>Category:</strong> {product.category}</p>
           </div>
 

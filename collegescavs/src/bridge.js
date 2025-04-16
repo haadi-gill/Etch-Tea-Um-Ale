@@ -114,6 +114,27 @@ async function fetchListing(listingID) {
     }
 }
 
+async function updateListing(listingID) {
+    const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/editpost.php";
+    const query = new URLSearchParams({
+        method: "post",
+        ID: listingID,
+        active: 'N'
+    }).toString();
+    const fullURL =`${baseURL}?${query}`;
+    try{
+        let res = await fetch(fullURL);
+        const listings = await res.json();
+        console.log(listings);
+        //Reconstruct listings
+        return listings;
+    }
+    catch(error){
+        console.log("Failed to gather listings: ", error);
+        return [];
+    }
+}
+
 async function fetchUserListings(email){
     const baseURL = "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/posts.php";
     const query = new URLSearchParams({
@@ -124,7 +145,6 @@ async function fetchUserListings(email){
     try{
         let res = await fetch(fullURL);
         const listings = await res.json();
-        //Reconstruct listings
         return listings;
     }
     catch(error){
@@ -189,20 +209,24 @@ async function fetchUserByEmail(email) {
     }
 }
 
-async function uploadListing(email, title, description, price){
+async function uploadListing(email, title, description, price, condition, category){
     const baseURL= "https://www.cise.ufl.edu/~h.gill/cis4930/in-class/Dev/addpost.php";
     const query = new URLSearchParams({
         method: "post",
-        user_email: email,
+        email: email,
         label: title,
         description: description,
-        price: price
+        price: price,
+        images: 'image',
+        condition: condition,
+        category: category
         //ADD IMAGE SUPPORT
     }).toString();
     const fullURL = `${baseURL}?${query}`;
     try{
         let res = await fetch(fullURL);
         let test = await res.json();
+        console.log(test);
         if(test === true){
             return true;
         }
@@ -246,4 +270,4 @@ async function newUser(email, password, first, last){
     
 }
 
-export { fetchAllListings, fetchListing, fetchUserListings, login, fetchUserByEmail, uploadListing, newUser, categories };
+export { fetchAllListings, fetchListing, updateListing, fetchUserListings, login, fetchUserByEmail, uploadListing, newUser, categories };
