@@ -24,7 +24,6 @@ const Sell = () => {
 
   const validate = () => {
     const newErrors = {};
-    console.log("USER: " + user);
     if (!formData.title || formData.title.length > 50) {
       newErrors.title = 'Title is required and must be less than 50 characters';
     }
@@ -83,7 +82,6 @@ const Sell = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Entered submit, validate: " + validate());
     if (user) {
       formData.user_email = user.email;
     } else {
@@ -110,7 +108,6 @@ const Sell = () => {
         
         var imageUrl = data.secure_url;
         setFormData(prev => ({ ...prev, image: imageUrl }));
-        console.log(imageUrl);
       }
       else{
         console.log("Failed to upload image");

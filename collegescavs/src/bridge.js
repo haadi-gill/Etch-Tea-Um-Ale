@@ -81,7 +81,7 @@ async function fetchAllListings() {
                 description: element.description,
                 active: element.active,
                 seller: element.user_email,
-                image: '../assets/phone.png' //REPLACE WITH BETTER WAY TO GET IMAGE
+                image: element.images
             }
             tempProducts.push(temp);
         });
@@ -130,7 +130,6 @@ async function updateListing(listingID, currentStatus) {
     try {
       const res = await fetch(fullURL);
       const response = await res.text();
-      console.log("Server response:", response);
   
       if (response.trim() === "true") {
         return newStatus;
@@ -234,7 +233,6 @@ async function uploadListing(email, title, description, price, image, condition,
     try{
         let res = await fetch(fullURL);
         let test = await res.json();
-        console.log(test);
         if(test === true){
             return true;
         }

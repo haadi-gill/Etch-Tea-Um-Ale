@@ -9,8 +9,10 @@ import { Tooltip, CircularProgress } from '@mui/material';
 import './Home.css';
 import { useWishlist } from '../../context/WishlistContext';
 import { useMyListings } from '../../context/MyListingsContext';
+import { useAuth } from '../../context/AuthContext';
 
 const Home = () => {
+  const user = useAuth;
   const [allProducts, setAllProducts] = useState([]);
   const [displayedProducts, setDisplayedProducts] = useState([]);
   const [filters, setFilters] = useState({ price: '', rating: '', category: '', condition: '' });

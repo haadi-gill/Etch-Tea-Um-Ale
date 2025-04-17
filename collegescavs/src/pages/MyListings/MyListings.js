@@ -43,7 +43,7 @@ const MyListings = () => {
             >
               <Card
                 id={product.post_id}
-                image={product.image}
+                image={product.images}
                 title={product.label}
                 price={product.price}
                 description={product.description}

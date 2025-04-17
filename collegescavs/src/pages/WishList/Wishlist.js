@@ -15,8 +15,8 @@ const Wishlist = () => {
         <div className="wishlist-grid">
           {wishlist.map((product) => (
             <Link 
-              to={`/product/${product.id}`} 
-              key={product.id}
+              to={`/product/${product.post_id}`} 
+              key={product.post_id}
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
               <Card

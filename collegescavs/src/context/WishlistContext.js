@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useAuth } from './AuthContext'; 
+import { fetchListing } from '../bridge';
 const WishlistContext = createContext();
 
 
@@ -40,8 +41,12 @@ export const WishlistProvider = ({ children }) => {
   };
 
   
-  const addToWishlist = (product) => {
-
+  const addToWishlist = async (product) => {
+    const listing = await fetchListing(product.id);
+    if (user.email === listing[0].user_email) {
+      alert('Cannot add your own listing to your wishlist');
+      return;
+    }
     setWishlist((prevWishlist) => {
       const updatedWishlist = [...prevWishlist, product];
       saveWishlistToLocalStorage(updatedWishlist);  

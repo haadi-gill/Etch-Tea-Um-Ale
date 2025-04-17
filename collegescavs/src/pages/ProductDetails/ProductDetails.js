@@ -59,7 +59,7 @@ const ProductDetails = () => {
   const toggleWishlist = () => {
     const wishlistItem = {
       id: product.product_id,
-      image: product.image,
+      image: product.images,
       title: product.label,
       price: product.price,
       ratings: seller.rating,
