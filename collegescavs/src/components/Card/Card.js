@@ -117,7 +117,6 @@ const Card = ({
           </Tooltip>
         )}
       </div>
-
       {active === "N" && <div className="sold-tag-card">SOLD</div>}
 
       {isOwnListing && (

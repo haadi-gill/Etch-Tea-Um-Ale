@@ -30,7 +30,7 @@ const Sell = () => {
     if (!formData.price || isNaN(formData.price) || parseFloat(formData.price) <= 0) {
       newErrors.price = 'Price is required and must be a positive number';
     }
-    if (!formData.description || formData.description.length > 500) {
+    if (!formData.description || formData.description.length > 50000) {
       newErrors.description = 'Description is required and must be less than 500 characters';
     }
     if (!formData.image) {

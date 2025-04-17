@@ -98,6 +98,8 @@ const Home = () => {
         ) : (
         <div className="products">
           {displayedProducts
+            .slice()
+            .reverse()
             .filter((product) => !myListings.some((listing) => listing.id === product.id))
             .map((product) => (
               <Link 
@@ -114,6 +116,7 @@ const Home = () => {
                   ratings={product.ratings}
                   category={product.category}
                   sold={product.sold}
+                  active={product.active}
                   onWishlist={wishlist.some(item => item.id === product.id)}
                   onRemove={handleRemoveFromWishlist}
                 />

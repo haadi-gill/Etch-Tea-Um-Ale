@@ -13,7 +13,7 @@ const Wishlist = () => {
         <p>No items in wishlist.</p>
       ) : (
         <div className="wishlist-grid">
-          {wishlist.map((product) => (
+          {wishlist.slice().reverse().map((product) => (
             <Link 
               to={`/product/${product.id}`} 
               key={product.id}

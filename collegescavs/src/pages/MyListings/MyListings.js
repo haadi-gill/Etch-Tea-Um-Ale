@@ -35,7 +35,7 @@ const MyListings = () => {
         <p>No items in your listings.</p>
       ) : (
         <div className="my-listings-grid">
-          {myListings.map((product) => (
+          {myListings.slice().reverse().map((product) => (
             <Link 
               to={`/product/${product.post_id}`} 
               key={product.post_id}
