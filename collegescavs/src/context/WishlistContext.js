@@ -43,9 +43,12 @@ export const WishlistProvider = ({ children }) => {
   
   const addToWishlist = async (product) => {
     const listing = await fetchListing(product.id);
-    if (user.email === listing[0].user_email) {
-      alert('Cannot add your own listing to your wishlist');
-      return;
+    console.log(listing);
+    if (user) {
+      if (user.email === listing[0].user_email) {
+        alert('Cannot add your own listing to your wishlist');
+        return;
+      }
     }
     setWishlist((prevWishlist) => {
       const updatedWishlist = [...prevWishlist, product];

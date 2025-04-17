@@ -28,6 +28,8 @@ const ProductDetails = () => {
 
   const loadListing = async () => {
     const product = await fetchListing(id);
+    console.log(id);
+    console.log(product);
     const seller = await fetchUserByEmail(product[0].user_email);
     if (product != null && seller != null) {
       setProduct(product[0]);
@@ -58,7 +60,7 @@ const ProductDetails = () => {
 
   const toggleWishlist = () => {
     const wishlistItem = {
-      id: product.product_id,
+      id: product.post_id,
       image: product.images,
       title: product.label,
       price: product.price,
@@ -109,7 +111,7 @@ const ProductDetails = () => {
       </button>
       <div className="product-box">
         <div className="image-section">
-          <img src={product.image} alt={product.label} />
+          <img src={product.images} alt={product.label} />
         </div>
 
         <div className="info-section">
