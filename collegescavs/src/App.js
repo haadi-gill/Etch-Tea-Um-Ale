@@ -11,13 +11,14 @@ import { WishlistProvider } from './context/WishlistContext';
 import MyListings from './pages/MyListings/MyListings';
 import { MyListingsProvider } from './context/MyListingsContext';
 import { AuthProvider } from './context/AuthContext';
+import { HashRouter } from 'react-router-dom';
 
 const App = () => {
   return (
     <AuthProvider>
       <WishlistProvider>
         <MyListingsProvider>
-          <Router>
+          <HashRouter>
             <div className="App">
               <Header />
               <Routes>
@@ -29,7 +30,7 @@ const App = () => {
                 <Route path="/mylistings" element={<MyListings />} />
               </Routes>
             </div>
-          </Router>
+          </HashRouter>
         </MyListingsProvider>
       </WishlistProvider>
     </AuthProvider>
